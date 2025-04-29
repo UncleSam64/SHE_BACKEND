@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    ports:
+      - "1433:1433"
+
+  backend:
+    build: .
+    container_name: backend_container
+    command: npm run dev
+    volumes:
+      - .:/workspace
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=sqlserver
+      - DB_USER=bnd
+      - DB_PASS=Ibackend123
+      - DB_NAME=DB
+      - DB_PORT=1433
+    depends_on:
+      - sqlserver
