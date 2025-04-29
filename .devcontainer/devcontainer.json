@@ -1,11 +1,13 @@
 {
-    "name": "Node.js 18 Codespace",
-    "image": "mcr.microsoft.com/devcontainers/node:18-bullseye",
-    "features": {},
-    "postCreateCommand": "npm install",
+    "name": "Node.js & Docker DevContainer",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:18-bullseye",
+    "features": {
+      "ghcr.io/devcontainers/features/docker-in-docker:2": {
+        "version": "latest"
+      }
+    },
     "customizations": {
       "vscode": {
-        "settings": {},
         "extensions": [
           "dbaeumer.vscode-eslint",
           "esbenp.prettier-vscode"
