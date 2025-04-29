@@ -1,21 +1,16 @@
 {
-    "name": "MSSQL Dev Container",
-    "dockerComposeFile": "../docker-compose.yml",
-    "service": "backend",
-    "workspaceFolder": "/workspaces/SHE_BACKEND",
+    "name": "Node.js 18 Codespace",
+    "image": "mcr.microsoft.com/devcontainers/node:18-bullseye",
+    "features": {},
+    "postCreateCommand": "npm install",
     "customizations": {
       "vscode": {
+        "settings": {},
         "extensions": [
-          "ms-azuretools.vscode-docker",
-          "ms-vscode-remote.remote-containers",
-          "ms-mssql.mssql"
-        ],
-        "settings": {
-          "terminal.integrated.shell.linux": "/bin/bash"
-        }
+          "dbaeumer.vscode-eslint",
+          "esbenp.prettier-vscode"
+        ]
       }
-    },
-    "forwardPorts": [3000, 1433],
-    "postCreateCommand": "npm install"
+    }
   }
   
