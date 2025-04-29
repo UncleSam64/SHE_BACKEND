@@ -1,16 +1,35 @@
-version: '3.8'
-
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: sqlserver_container
-    restart: always
+  backend:
+    build:
+      context: /Users/sam/express-react-project/app
+      dockerfile: Dockerfile
+    command: [ "npm", "run", "dev" ]
+    container_name: backend_container
+    depends_on:
+      sqlserver:
+        condition: service_started
+        required: true
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Ibackend123
-      - MSSQL_PID=Developer
+      DB_HOST: sqlserver
+      DB_NAME: DB
+      DB_PASS: Ibackend123
+      DB_PORT: "1433"
+      DB_USER: bnd
+    ports:
+      - "3000:3000"
+    volumes:
+      - /Users/sam/express-react-project/app:/workspace
+
+  sqlserver:
+    container_name: sqlserver_container
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      SA_PASSWORD: Ibackend123
+    image: mcr.microsoft.com/mssql/server:2019-latest
     ports:
       - "1433:1433"
+    restart: always
     volumes:
       - sqlserver_data:/var/opt/mssql
 
