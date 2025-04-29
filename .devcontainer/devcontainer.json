@@ -1,9 +1,8 @@
 {
     "name": "MSSQL Dev Container",
     "dockerComposeFile": "../docker-compose.yml",
-    "service": "sqlserver",
+    "service": "backend",
     "workspaceFolder": "/workspace",
-    
     "customizations": {
       "vscode": {
         "extensions": [
@@ -12,11 +11,11 @@
           "ms-mssql.mssql"
         ],
         "settings": {
-      "terminal.integrated.shell.linux": "/bin/bash"
-    }
+          "terminal.integrated.shell.linux": "/bin/bash"
+        }
       }
     },
-    "forwardPorts": [1433],
-    "postCreateCommand": "sleep 15 && /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'Ibackend123' -i .devcontainer/init-db.sql"
+    "forwardPorts": [3000, 1433],
+    "postCreateCommand": "npm install"
   }
   
