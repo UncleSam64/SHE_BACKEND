@@ -1,21 +1,36 @@
-backend:
-  build:
-    context: .
-    dockerfile: Dockerfile
-  command: ["npm", "run", "dev"]
-  container_name: backend_container
-  working_dir: /workspace
-  depends_on:
-    sqlserver:
-      condition: service_started
-      required: true
-  environment:
-    DB_HOST: sqlserver
-    DB_NAME: DB
-    DB_PASS: Ibackend123
-    DB_PORT: "1433"
-    DB_USER: bnd
-  ports:
-    - "3000:3000"
-  volumes:
-    - .:/workspace
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["npm", "run", "dev"]
+    container_name: backend_container
+    depends_on:
+      sqlserver:
+        condition: service_started
+    environment:
+      DB_HOST: sqlserver
+      DB_NAME: DB
+      DB_PASS: Ibackend123
+      DB_PORT: "1433"
+      DB_USER: bnd
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/workspace
+
+  sqlserver:
+    container_name: sqlserver_container
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      SA_PASSWORD: "Ibackend123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+volumes:
+  sqlserver_data:
